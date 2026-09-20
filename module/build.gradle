@@ -26,6 +26,10 @@ android {
             version "3.18.1"
         }
     }
+    // 原仓库没写 ndkVersion —— AGP 7.2.2 会去找它的默认 NDK 21.4.7075529，
+    // 而 GitHub runner 上并没有装那个版本 → 构建必然报「NDK not configured」。
+    // CMakeLists 用的是 C++20，NDK 21 的 clang 也吃不消，所以显式钉到 23：
+    ndkVersion = "23.1.7779620"
 }
 
 repositories {
