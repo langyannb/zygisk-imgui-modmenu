@@ -29,6 +29,11 @@ jobs:
       #   cmake;3.18.1           module/build.gradle 里写死了这个版本
       #   ndk;23.1.7779620       module/build.gradle 里 pin 的 NDK
       #                          （AGP 7.2.2 默认是 21.4.7075529，runner 上没有）
+      # ⚠️ 这一步必须在 setup-java 之前跑 ——
+      #   runner 自带的 sdkmanager（cmdline-tools;latest）是 JDK 17 编的，
+      #   而下面要为 AGP 7.2.2 切到 JDK 11；切成 11 之后再跑 sdkmanager 会直接
+      #   UnsupportedClassVersionError（class file 61.0 > 55.0）。
+      #   所以：先用默认 JDK 17 装组件，再 setup-java 切 11 编译。
       - name: 安装 Android SDK 组件
         run: |
           set -e
